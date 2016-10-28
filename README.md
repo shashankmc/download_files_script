@@ -12,3 +12,5 @@ If you do not want any output on your terminal, redirect it.
 If you want to see all the output on your terminal, then just run
 
 ./download_files.sh
+
+Script was written for pdf downloads from a specific site. Change variable as necessary.
