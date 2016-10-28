@@ -12,14 +12,16 @@ file_list="http://ktbs.kar.nic.in/New/jsonfile/textbooks.txt"
 `wget $file_list`
 `cat textbooks.txt | grep "pdf" > filenames_only.txt`
 
-#set Field separator to identify when next line occurs"
+#set Field separator to identify when next line occurs
 IFS=$'\n'
 for line in `cat filenames_only.txt`
 do
 	#the field separator for each line is given as the fourth field. Might be wrong for many other"
 	#filename=`echo $line | tr '\n' ' ' | cut -d':' -f4`
 	#Grep is more effective and flexible to extract path and file name with ext. Change regex as necessary
-	filename=`echo $line | tr '\n' ' ' | grep -oie 'text[a-zA-Z0-9.\/\(\)\ -]*.pdf'` 
-	clean_filename=`echo $filename | sed 's///g'|sed 's/$//g' | sed 's/,//g' | sed 's/\}//g' | sed 's/"//g' | sed 's/\ //g'`
+	filename=`echo $line | tr '\n' ' ' | grep -oie 'text[a-zA-Z0-9.\/\(\)\ -]*.pdf'`
+
+	#the first sed replacement is for ctrl-m character which is "return". 
+	clean_filename=`echo $filename | sed 's///g'| sed 's/$//g' | sed 's/,//g' | sed 's/\}//g' | sed 's/"//g' | sed 's/\ //g'`
 	`wget $url$clean_filename`
 done
